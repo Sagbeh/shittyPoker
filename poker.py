@@ -142,7 +142,7 @@ class Poker(object):
             # Add cards to hand
 
 
-    def play(self):
+    def play(self, playerList):
         # Define gameplay
 
         for i in range(len(self.hands)):
@@ -153,7 +153,7 @@ class Poker(object):
             # Create
             for card in sortedHand:
                 hand = hand + str(card) + " "
-            print("Hand " + str(i + 1) + ": " + hand)
+            print(playerList[i] + ": " + hand)
 
     def point(self, hand):
 
@@ -363,7 +363,6 @@ class Poker(object):
 
 def main():
     # Main game
-
     chips = 0
     playerList =[]
     numHands = 0
@@ -378,25 +377,30 @@ def main():
             else:
                 break
 
+
+    for x in range(0, numHands):
+        playerList.append(input("\nEnter Player " + str(x + 1) + "\'s name: \n"))
+
+    chips = [1000] * numHands
     # Ask user for number of hands to play
 
     game = Poker(numHands)
 
     # Play round of poker
-    game.play()
+    game.play(playerList)
 
     # Display results of round
     print('\n')
     for i in range(numHands):
         curHand = game.hands[i]
-        print("Hand " + str(i + 1) + ": ", end="")
+        print(playerList[i] + ": ", end="")
         game.isRoyal(curHand)
 
     maxpoint = max(game.totalPoints)
     maxindex = game.totalPoints.index(maxpoint)
 
     # Display winner of round
-    print('\nHand %d wins' % (maxindex + 1))
+    print('\n' + playerList[maxindex] + ' wins!')
 
 
 main()
